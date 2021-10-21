@@ -1,0 +1,341 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.container .circle-section-bg {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.container .circle-section-bg .circle {
+  position: absolute;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px 2px rgba(255, 255, 255, 0.2);
+}
+
+.container .circle-section-bg .circle:nth-child(1) {
+  width: 500rpx;
+  height: 500rpx;
+  animation: showFirst 1.5s ease forwards;
+  background: linear-gradient(-45deg, #ffa509 0%, #bb46ab 90%);
+}
+
+.container .circle-section-bg .circle:nth-child(2) {
+  top: 150rpx;
+  right: -300rpx;
+  width: 300rpx;
+  height: 300rpx;
+  animation: showSec 1.5s ease .5s forwards;
+  background: linear-gradient(-45deg, #4FD5F5 0%, #E8ABF9 80%);
+}
+
+.container .circle-section-bg .circle:nth-child(3) {
+  bottom: -1600rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1600rpx;
+  height: 1600rpx;
+  animation: showThr 1.5s ease 1s forwards;
+  background: linear-gradient(-75deg, #6d78ff 0%, #00ffb8 100%);
+}
+
+.container .content-section {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 64rpx;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  backdrop-filter: saturate(180%) blur(1rem);
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.container .content-section .scan-section {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.container .content-section .scan-section .nfc-title {
+  font-size: 2rem;
+  line-height: 1;
+  margin-bottom: 3rem;
+  font-weight: bold;
+  background: linear-gradient(140deg, #000 0%, #804400 100%);
+  background-position: 50% 75%;
+  background-size: 100% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 0;
+  animation: showContent 1.5s ease 1.5s forwards;
+}
+
+.container .content-section .scan-section .scan-btn {
+  position: relative;
+  margin-bottom: 4rem;
+  border-radius: 50%;
+  opacity: 0;
+  animation: showContent 1.5s ease 1.5s forwards;
+}
+
+.container .content-section .scan-section .scan-btn .circle-color {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 350rpx;
+  height: 350rpx;
+  background: linear-gradient(-45deg, #ff7b00 0%, #ffd900 100%);
+  box-shadow: 10px 10px 10px rgba(255, 255, 255, 0.3) inset, -10px -10px 10px rgba(255, 81, 0, 0.3) inset;
+}
+
+.container .content-section .scan-section .scan-btn .circle-color:active {
+  background: linear-gradient(-135deg, #ff7b00 0%, #ffd900 100%);
+  box-shadow: -10px -10px 10px rgba(255, 255, 255, 0.3) inset, 10px 10px 10px rgba(255, 81, 0, 0.3) inset;
+}
+
+.container .content-section .scan-section .scan-btn .circle-color .scan-icon {
+  width: 100rpx;
+  height: 100rpx;
+  animation: scaleNormal 3s ease infinite;
+}
+
+.container .content-section .scan-section .scan-btn .circle-color.start {
+  animation: startScaleBtn 3s ease infinite;
+}
+
+.container .content-section .scan-section .scan-btn .circle-color.start .scan-icon {
+  animation: startScale 3s ease infinite;
+}
+
+.container .content-section .scan-section .scan-btn .circle-color:after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: absolute;
+  background: inherit;
+  top: 0.25rem;
+  filter: blur(16px);
+  opacity: 0.9;
+  z-index: -1;
+}
+
+.container .content-section .scan-section .stop-btn {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  bottom: 2rem;
+  right: 0;
+  padding: 12rpx;
+  opacity: 0;
+  transition: opacity .3s .3s;
+  background: linear-gradient(-45deg, #ff1e00 30%, #ff7b00 100%);
+  box-shadow: 2px 4px 10px 4px rgba(255, 30, 0, 0.4), 4px 4px 6px rgba(255, 255, 255, 0.4) inset, -4px -4px 6px rgba(156, 18, 0, 0.4) inset;
+}
+
+.container .content-section .scan-section .stop-btn:active {
+  background: linear-gradient(-135deg, #ff1e00 0%, #ff7b00 100%);
+  box-shadow: 2px 4px 10px 4px rgba(255, 30, 0, 0.4), -4px -4px 6px rgba(255, 255, 255, 0.4) inset, 4px 4px 6px rgba(156, 18, 0, 0.4) inset;
+}
+
+.container .content-section .scan-section .stop-btn.show {
+  opacity: 1;
+}
+
+.container .content-section .scan-section .stop-btn .icon {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.container .content-section .send-section {
+  border-radius: 1.5rem;
+  width: 100%;
+  min-height: 400rpx;
+  max-height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 20px 6px rgba(0, 191, 255, 0.1), -6px -6px 6px rgba(0, 191, 255, 0.2) inset;
+  opacity: 0;
+  animation: showContent 1.5s ease 2.5s forwards;
+}
+
+.container .content-section .send-section .title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32rpx;
+  font-weight: bold;
+  line-height: 1;
+  color: #5a3001;
+  border-bottom: 1px solid #bee6ff;
+}
+
+.container .content-section .send-section .title .total-box {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.container .content-section .send-section .title .total-box .count-item {
+  padding: 0 16rpx;
+  border-right: 1px solid #bee6ff;
+}
+
+.container .content-section .send-section .title .total-box .count-item:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.container .content-section .send-section .title .total-box .count-item .icon {
+  width: 28rpx;
+  height: 28rpx;
+}
+
+.container .content-section .send-section .number-box {
+  padding: 0 32rpx;
+  max-height: calc(100% - 128rpx);
+  overflow-y: scroll;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  transition: all .3s;
+}
+
+.container .content-section .send-section .number-box .number-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  line-height: 1;
+  padding: 16rpx 0;
+  border-top: 1px solid #bee6ff;
+  animation: showItem .5s ease forwards;
+}
+
+.container .content-section .send-section .number-box .number-list:first-child {
+  border-top: none;
+}
+
+.container .content-section .send-section .number-box .number-list .icon {
+  width: 36rpx;
+  height: 36rpx;
+}
+
+.container .content-section .send-section .number-box .number-list .icon.loading {
+  animation: rotate 1.5s linear infinite;
+}
+
+@keyframes showFirst {
+  0% {
+    top: -100%;
+    left: -100%;
+  }
+  100% {
+    top: -100rpx;
+    left: -20%;
+  }
+}
+
+@keyframes showSec {
+  0% {
+    top: 150rpx;
+    right: -300rpx;
+  }
+  100% {
+    top: 150rpx;
+    right: -150rpx;
+  }
+}
+
+@keyframes showThr {
+  0% {
+    bottom: -1600rpx;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  100% {
+    bottom: -1200rpx;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes showContent {
+  0% {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes showItem {
+  0% {
+    opacity: .5;
+    transform: translateX(-50%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes startScale {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.8) rotate(180deg);
+  }
+  100% {
+    transform: scale(1) rotate(360deg);
+  }
+}
+
+@keyframes startScaleBtn {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes scaleNormal {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: none;
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

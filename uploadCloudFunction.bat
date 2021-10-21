@@ -1,0 +1,1 @@
+"D:\Program Files (x86)\Tencent\微信web开发者工具\cli.bat" cloud functions deploy --e cloud1-6g06pr4lf2d8afe5 --n quickstartFunctions --r --project "D:\workspace\NFC-scanning" --report_start && "D:\Program Files (x86)\Tencent\微信web开发者工具\cli.bat" cloud functions deploy --e check-helper-9gebcaet3cbdd275 --n quickstartFunctions --r --project "D:\workspace\NFC-scanning" --report

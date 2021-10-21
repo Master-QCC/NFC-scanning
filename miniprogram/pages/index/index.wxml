@@ -1,0 +1,51 @@
+<view class="container">
+
+  <view class="circle-section-bg">
+    <view class="circle"></view>
+    <view class="circle"></view>
+    <view class="circle"></view>
+  </view>
+
+  <view class="content-section">
+    <view class="scan-section">
+      <view class="nfc-title">NFC扫描</view>
+      <view class="scan-btn" bindtap="startScan">
+        <view class="circle-color {{start ? 'start' : ''}}">
+          <image class="scan-icon" src="../../images/start.svg" mode="aspectFill"></image>
+        </view>
+      </view>
+      <view class="stop-btn {{start ? 'show' : ''}}" bindtap="stopScan">
+        <image class="icon" src="../../images/stop.svg" mode="aspectFill"></image>
+      </view>
+    </view>
+
+    <view class="send-section">
+      <view class="title">
+        <text class="header">扫描列表</text>
+        <view class="total-box" wx:if="{{numberList.length > 0}}">
+          <view class="count-item">
+            <image class="icon" src="../../images/success.svg" mode="aspectFill"></image>
+            {{successNumber > 0 ? successNumber : ''}}
+          </view>
+          <view class="count-item">
+            <image class="icon" src="../../images/fail.svg" mode="aspectFill"></image>
+            {{failNumber > 0 ? failNumber : ''}}
+          </view>
+          <view class="count-item">
+            <image class="icon" src="../../images/loading.svg" mode="aspectFill"></image>
+            {{loadingNumber > 0 ? loadingNumber : ''}}
+          </view>
+        </view>
+      </view>
+      <view class="number-box">
+        <view class="number-list" wx:for="{{numberList}}" wx:key="index">
+          <view>{{item.number}}</view>
+          <image class="icon" src="../../images/fail.svg" mode="aspectFill" wx:if="{{item.submitted === 'fail'}}"></image>
+          <image class="icon" src="../../images/success.svg" mode="aspectFill" wx:elif="{{item.submitted}}"></image>
+          <image class="icon loading" src="../../images/loading.svg" mode="aspectFill" wx:else></image>
+        </view>
+      </view>
+    </view>
+  </view> 
+
+</view>
