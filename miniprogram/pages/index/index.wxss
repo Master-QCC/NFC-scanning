@@ -85,7 +85,7 @@
 
 .container .content-section .scan-section .scan-btn {
   position: relative;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
   border-radius: 50%;
   opacity: 0;
   animation: showContent 1.5s ease 1.5s forwards;
@@ -164,11 +164,27 @@
   height: 60rpx;
 }
 
+.container .content-section .scan-section .sub-title {
+  position: absolute;
+  font-size: .75rem;
+  bottom: 2rem;
+  left: 0;
+  color: #361d08;
+  opacity: 0;
+  animation: showContent 1s ease 3s forwards;
+}
+
+.container .content-section .scan-section .sub-title .bold {
+  font-size: 1rem;
+  padding-right: 8rpx;
+  font-weight: bold;
+}
+
 .container .content-section .send-section {
+  position: relative;
   border-radius: 1.5rem;
   width: 100%;
-  min-height: 400rpx;
-  max-height: 100%;
+  min-height: 220px;
   overflow: hidden;
   box-sizing: border-box;
   background-color: rgba(255, 255, 255, 0.9);
@@ -181,11 +197,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 32rpx;
+  padding: 1rem;
   font-weight: bold;
   line-height: 1;
   color: #5a3001;
-  border-bottom: 1px solid #bee6ff;
+  border-bottom: 1px solid #c8eaff;
 }
 
 .container .content-section .send-section .title .total-box {
@@ -195,8 +211,10 @@
 }
 
 .container .content-section .send-section .title .total-box .count-item {
+  display: flex;
+  align-items: center;
   padding: 0 16rpx;
-  border-right: 1px solid #bee6ff;
+  border-right: 1px solid #c8eaff;
 }
 
 .container .content-section .send-section .title .total-box .count-item:last-child {
@@ -205,15 +223,28 @@
 }
 
 .container .content-section .send-section .title .total-box .count-item .icon {
+  width: 24rpx;
+  height: 24rpx;
+}
+
+.container .content-section .send-section .title .total-box .count-item .icon.loading {
   width: 28rpx;
   height: 28rpx;
+  margin-right: 8rpx;
+}
+
+.container .content-section .send-section .title .total-box .count-item .icon.fail {
+  width: 20rpx;
+  height: 20rpx;
+}
+
+.container .content-section .send-section .title .total-box .count-item .number {
+  margin-left: 12rpx;
 }
 
 .container .content-section .send-section .number-box {
-  padding: 0 32rpx;
-  max-height: calc(100% - 128rpx);
-  overflow-y: scroll;
-  overflow-x: hidden;
+  padding: 0 1rem;
+  height: calc(100% - 50px);
   box-sizing: border-box;
   transition: all .3s;
 }
@@ -223,7 +254,8 @@
   align-items: center;
   justify-content: space-between;
   line-height: 1;
-  padding: 16rpx 0;
+  max-height: 0;
+  padding: .5rem 0;
   border-top: 1px solid #bee6ff;
   animation: showItem .5s ease forwards;
 }
@@ -232,12 +264,23 @@
   border-top: none;
 }
 
+.container .content-section .send-section .number-box .number-list:last-child {
+  padding-bottom: 1.5rem;
+}
+
 .container .content-section .send-section .number-box .number-list .icon {
-  width: 36rpx;
-  height: 36rpx;
+  width: 34rpx;
+  height: 34rpx;
+}
+
+.container .content-section .send-section .number-box .number-list .icon.fail {
+  width: 28rpx;
+  height: 28rpx;
 }
 
 .container .content-section .send-section .number-box .number-list .icon.loading {
+  width: 36rpx;
+  height: 36rpx;
   animation: rotate 1.5s linear infinite;
 }
 
@@ -289,10 +332,12 @@
 
 @keyframes showItem {
   0% {
+    max-height: 0;
     opacity: .5;
     transform: translateX(-50%);
   }
   100% {
+    max-height: 100rpx;
     opacity: 1;
     transform: translateX(0);
   }

@@ -17,6 +17,7 @@
       <view class="stop-btn {{start ? 'show' : ''}}" bindtap="stopScan">
         <image class="icon" src="../../images/stop.svg" mode="aspectFill"></image>
       </view>
+      <view class="sub-title" wx:if="{{finalTotal > 0}}"><view>已累计扫描</view><text class="bold">{{finalTotal}}</text>个</view>
     </view>
 
     <view class="send-section">
@@ -25,27 +26,27 @@
         <view class="total-box" wx:if="{{numberList.length > 0}}">
           <view class="count-item">
             <image class="icon" src="../../images/success.svg" mode="aspectFill"></image>
-            {{successNumber > 0 ? successNumber : ''}}
+            <text class="number" wx:if="{{successNumber > 0}}">{{successNumber}}</text>
           </view>
           <view class="count-item">
-            <image class="icon" src="../../images/fail.svg" mode="aspectFill"></image>
-            {{failNumber > 0 ? failNumber : ''}}
+            <image class="icon fail" src="../../images/fail.svg" mode="aspectFill"></image>
+            <text class="number" wx:if="{{failNumber > 0}}">{{failNumber}}</text>
           </view>
           <view class="count-item">
-            <image class="icon" src="../../images/loading.svg" mode="aspectFill"></image>
-            {{loadingNumber > 0 ? loadingNumber : ''}}
+            <image class="icon loading" src="../../images/loading.svg" mode="aspectFill"></image>
+            <text class="number" wx:if="{{loadingNumber > 0}}">{{loadingNumber}}</text>
           </view>
         </view>
       </view>
-      <view class="number-box">
+      <scroll-view class="number-box" scroll-y="true" scroll-top="{{scrollTop}}" scroll-with-animation="true">
         <view class="number-list" wx:for="{{numberList}}" wx:key="index">
           <view>{{item.number}}</view>
-          <image class="icon" src="../../images/fail.svg" mode="aspectFill" wx:if="{{item.submitted === 'fail'}}"></image>
-          <image class="icon" src="../../images/success.svg" mode="aspectFill" wx:elif="{{item.submitted}}"></image>
+          <image class="icon fail" src="../../images/fail.svg" mode="aspectFill" wx:if="{{item.submitted === 'fail'}}"></image>
+          <image class="icon" src="../../images/have.svg" mode="aspectFill" wx:elif="{{item.submitted === 'have'}}"></image>
+          <image class="icon" src="../../images/success.svg" mode="aspectFill" wx:elif="{{item.submitted === 'success'}}"></image>
           <image class="icon loading" src="../../images/loading.svg" mode="aspectFill" wx:else></image>
         </view>
-      </view>
+      </scroll-view>
     </view>
   </view> 
-
 </view>

@@ -6,6 +6,8 @@ Page({
     successNumber: 0,
     failNumber: 0,
     loadingNumber: 0,
+    scrollTop: 0,
+    finalTotal: 0,
     numberList: []
   },
   ab2hex(buffer) {
@@ -59,7 +61,7 @@ Page({
     const that = this;
 
     that.nfc.startDiscovery({
-      success: (e) =>{ 
+      success(e) { 
         that.setData({
           start: true,
         })
@@ -91,12 +93,15 @@ Page({
 
     list.push({
       number: res,
-      submitted: false
+      submitted: 'loading'
     })
+
+    let top = (index + 1) * 34;
 
     that.setData({
       numberList: list,
-      loadingNumber: loadingN + 1
+      loadingNumber: loadingN + 1,
+      scrollTop: top
     })
 
     API.request('/label/addHardWare', 'POST', submitData).then(res => {
@@ -105,11 +110,15 @@ Page({
       let failN = that.data.failNumber;
       if (res.data.code === 200) {
         that.setData({
-          [target]: true,
+          [target]: 'success', 
           loadingNumber: loadingN - 1,
           successNumber: successN + 1
         })
       } else if (res.data.code === 502) {
+        that.setData({
+          [target]: 'have',
+          loadingNumber: loadingN - 1
+        })
         wx.showToast({
           title: '该硬件已存在',
           icon: 'error'
@@ -146,8 +155,20 @@ Page({
       path: '/pages/index/index'
     }
   },
+  onLoad() {
+    let storageFinalTotal = wx.getStorageSync('finalTotal') ? wx.getStorageSync('finalTotal') : 0;
+    this.setData({
+      finalTotal: storageFinalTotal ? storageFinalTotal : 0
+    })
+  },
   onHide() {
+    let finalTotal = this.data.finalTotal;
+    let length = this.data.numberList.length;
     //退出时关闭NFC模块
     this.stopScan();
+    wx.setStorage({
+      key: "finalTotal",
+      data: finalTotal + length
+    })
   }
 })
