@@ -3,12 +3,18 @@ const API = require('../../helper/api');
 Page({
   data: {
     start: false,
-    successNumber: 0,
-    failNumber: 0,
-    loadingNumber: 0,
-    scrollTop: 0,
-    finalTotal: 0,
-    numberList: []
+    //入库
+    successInNumber: 0,
+    failInNumber: 0,
+    nfcInList: [],
+    //出库
+    successOutNumber: 0,
+    failOutNumber: 0,
+    nfcOutList: [],
+    //下拉菜单
+    modeIndex: '0',
+    modelList: ['入库', '出库'],
+    scroll: false
   },
   ab2hex(buffer) {
     var hexArr = Array.prototype.map.call(
@@ -53,10 +59,26 @@ Page({
         hardwareIdTwo = that.byteToString(new Int8Array(item.payload))
         hardwareId = hardwareIdOne + '-' + hardwareIdTwo.substring(hardwareIdTwo.length - 3);
       })
-      this.submit(hardwareId);
+      
+      if (hardwareId && that.data.modeIndex === '0') {
+        that.submitIn(hardwareId);
+      } else if (hardwareId && that.data.modeIndex === '1') {
+        that.submitOut(hardwareId);
+      }
     }
   },
   startScan() {
+    let isIOS = wx.getSystemInfoSync().system.toLowerCase().indexOf('ios') !== -1
+
+    if (isIOS) {
+      wx.showModal({
+        title: '提示',
+        content: '苹果设备️暂不支持NFC功能',
+        showCancel: false,
+        confirmColor: '#ffa400'
+      })
+      return;
+    }
     this.nfc = wx.getNFCAdapter();
     const that = this;
 
@@ -67,10 +89,17 @@ Page({
         })
       },
       fail(err) {
-        wx.showToast({
-          title: '设备不支持NFC',
-          icon: 'error'
-        })
+        if (err.errCode === 13021) {
+          wx.showToast({
+            title: '已经开始扫描',
+            icon: 'error'
+          })
+        } else {
+          wx.showToast({
+            title: '设备不支持NFC',
+            icon: 'error'
+          })
+        }
         console.log(err);
         return;
       }
@@ -80,63 +109,119 @@ Page({
       that.getMessage(res);
     });
   },
-  submit(res) {
+  bindPickerChange(e) {
+    this.setData({
+      modeIndex: e.detail.value
+    })
+    if (e.detail.value === '0') {
+      this.setData({
+        scroll: false
+      })
+    } else {
+      this.setData({
+        scroll: true
+      })
+    }
+  },
+  submitIn(res) {
     const that = this;
-    let list = that.data.numberList;
-    let index = list.length;
-    let loadingN = that.data.loadingNumber;
-    let target = 'numberList[' + index + '].submitted'
-
+    let inlist = that.data.nfcInList;
     let submitData = {
       hardwareId: res
     }
 
-    list.push({
-      number: res,
-      submitted: 'loading'
-    })
-
-    let top = (index + 1) * 34;
-
-    that.setData({
-      numberList: list,
-      loadingNumber: loadingN + 1,
-      scrollTop: top
-    })
-
     API.request('/label/addHardWare', 'POST', submitData).then(res => {
-      let loadingN = that.data.loadingNumber;
-      let successN = that.data.successNumber;
-      let failN = that.data.failNumber;
+      let successN = that.data.successInNumber;
+      let failN = that.data.failInNumber;
       if (res.data.code === 200) {
+        inlist.unshift({
+          number: submitData.hardwareId,
+          submitted: 'success'
+        })
+    
         that.setData({
-          [target]: 'success', 
-          loadingNumber: loadingN - 1,
-          successNumber: successN + 1
+          nfcInList: inlist,
+          successInNumber: successN + 1
         })
       } else if (res.data.code === 502) {
-        that.setData({
-          [target]: 'have',
-          loadingNumber: loadingN - 1
-        })
         wx.showToast({
           title: '该硬件已存在',
           icon: 'error'
         })
       } else {
+        inlist.unshift({
+          number: submitData.hardwareId,
+          submitted: 'fail'
+        })
+    
         that.setData({
-          [target]: 'fail',
-          loadingNumber: loadingN - 1,
-          failNumber: failN + 1
+          nfcInList: inlist,
+          failInNumber: failN + 1
+        })
+        wx.showToast({
+          title: res.data.message,
+          icon: 'error'
         })
       }
     }).catch(err => {
-      let loadingN = that.data.loadingNumber;
-      let failN = that.data.failNumber;
+      let failN = that.data.failInNumber;
+      inlist.unshift({
+        number: submitData.hardwareId,
+        submitted: 'fail'
+      })
+  
       that.setData({
-        [target]: 'fail',
-        loadingNumber: loadingN - 1,
-        failNumber: failN + 1
+        nfcInList: inlist,
+        failInNumber: failN + 1
+      })
+      wx.showToast({
+        title: '提交失败',
+        icon: 'error'
+      })
+      console.log(err);
+    })
+  },
+  submitOut(res) {
+    const that = this;
+    let outlist = that.data.nfcOutList;
+    let submitData = {
+      hardwareId: res
+    }
+
+    API.request('/label/updateHardWare', 'POST', submitData).then(res => {
+      let successN = that.data.successOutNumber;
+      let failN = that.data.failOutNumber;
+      if (res.data.code === 200) {
+        outlist.unshift({
+          number: submitData.hardwareId,
+          submitted: 'success'
+        })
+    
+        that.setData({
+          nfcOutList: outlist,
+          successOutNumber: successN + 1
+        })
+      } else {
+        outlist.unshift({
+          number: submitData.hardwareId,
+          submitted: 'fail'
+        })
+    
+        that.setData({
+          nfcOutList: outlist,
+          failOutNumber: failN + 1
+        })
+      }
+    }).catch(err => {
+      let failN = that.data.failOutNumber;
+      outlist.unshift({
+        number: submitData.hardwareId,
+        submitted: 'fail'
+      })
+  
+      that.setData({
+        nfcOutList: outlist,
+        failOutNumber: failN + 1
       })
       console.log(err);
     })
@@ -155,20 +240,8 @@ Page({
       path: '/pages/index/index'
     }
   },
-  onLoad() {
-    let storageFinalTotal = wx.getStorageSync('finalTotal') ? wx.getStorageSync('finalTotal') : 0;
-    this.setData({
-      finalTotal: storageFinalTotal ? storageFinalTotal : 0
-    })
-  },
   onHide() {
-    let finalTotal = this.data.finalTotal;
-    let length = this.data.numberList.length;
     //退出时关闭NFC模块
     this.stopScan();
-    wx.setStorage({
-      key: "finalTotal",
-      data: finalTotal + length
-    })
   }
 })

@@ -7,6 +7,9 @@ const app = getApp();
  * @param dataValue: the request data
  */
 function request(url, method, dataValue) {
+  wx.showLoading({
+    title: '提交中。。。',
+  })
   let promise = new Promise((resolve, reject) => {
     wx.request({
       url: app.globalData.domain + url,
@@ -18,10 +21,12 @@ function request(url, method, dataValue) {
       },
       success (res) {
         resolve && resolve(res);
+        wx.hideLoading();
         console.log('success',res);
       },
       fail (res) {
         reject && reject(res);
+        wx.hideLoading();
         console.log('fail',res);
       }
     })

@@ -80,6 +80,29 @@
         animation: showContent 1.5s ease 1.5s forwards;
       }
 
+      .model-selection {
+        position: absolute;
+        bottom: 1.5rem;
+        left: 0;
+        padding: .5rem;
+        border-radius: .5rem;
+        background-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 6px 20px 6px rgba(0, 191, 255, 0.2);
+        opacity: 0;
+        animation: showContent 1.5s ease 2s forwards;
+
+        .picker {
+          display: flex;
+          align-items: center;
+
+          .icon {
+            margin-left: .25rem;
+            width: 32rpx;
+            height: 32rpx;
+          }
+        }
+      }
+
       .scan-btn {
         position: relative;
         margin-bottom: 3rem;
@@ -139,7 +162,7 @@
         align-items: center;
         justify-content: center;
         border-radius: 50%;
-        bottom: 2rem;
+        bottom: 1.5rem;
         right: 0;
         padding: 12rpx;
         opacity: 0;
@@ -159,22 +182,6 @@
         .icon {
           width: 60rpx;
           height: 60rpx;
-        }
-      }
-
-      .sub-title {
-        position: absolute;
-        font-size: .75rem;
-        bottom: 2rem;
-        left: 0;
-        color: rgb(54, 29, 8);
-        opacity: 0;
-        animation: showContent 1s ease 3s forwards;
-  
-        .bold {
-          font-size: 1rem;
-          padding-right: 8rpx;
-          font-weight: bold;
         }
       }
     }
