@@ -189,8 +189,8 @@
     .send-section {
       position: relative;
       border-radius: 1.5rem;
-      width: 100%;
       min-height: 220px;
+      width: 100%;
       overflow: hidden;
       box-sizing: border-box;
       background-color: rgba(255, 255, 255, 0.9);
@@ -228,12 +228,6 @@
               width: 24rpx;
               height: 24rpx;
 
-              &.loading {
-                width: 28rpx;
-                height: 28rpx;
-                margin-right: 8rpx;
-              }
-
               &.fail {
                 width: 20rpx;
                 height: 20rpx;
@@ -247,42 +241,55 @@
         }
       }
 
-      .number-box {
-        padding: 0 1rem;
-        height: calc(100% - 50px);
-        box-sizing: border-box;
-        transition: all .3s;
+      .number-wrapper {
+        width: 200%;
+        height: 100%;
+        transition: all .5s;
 
-        .number-list {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          line-height: 1;
-          max-height: 0;
-          padding: .5rem 0;
-          border-top: 1px solid #bee6ff;
-          animation: showItem .5s ease forwards;
+        &.scroll {
+          transform: translateX(-50%);
+        }
 
-          &:first-child {
-            border-top: none;
-          }
-          &:last-child {
-            padding-bottom: 1.5rem;
-          }
+        .number-box {
+          padding: 0 1rem;
+          width: 50%;
+          display: inline-block;
+          height: calc(100% - 50px);
+          overflow-y: scroll;
+          box-sizing: border-box;
+          transition: all .3s;
 
-          .icon {
-            width: 34rpx;
-            height: 34rpx;
+          .number-list {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            line-height: 1;
+            max-height: 0;
+            padding: .5rem 0;
+            border-top: 1px solid #bee6ff;
+            animation: showItem .5s ease forwards;
 
-            &.fail {
-              width: 28rpx;
-              height: 28rpx;
+            &:first-child {
+              border-top: none;
+            }
+            &:last-child {
+              padding-bottom: 1.5rem;
             }
 
-            &.loading {
-              width: 36rpx;
-              height: 36rpx;
-              animation: rotate 1.5s linear infinite;
+            .icon {
+              width: 34rpx;
+              height: 34rpx;
+
+              &.fail {
+                width: 28rpx;
+                height: 28rpx;
+              }
+
+              &.loading {
+                width: 36rpx;
+                height: 36rpx;
+                animation: rotate 1.5s linear infinite;
+              }
             }
           }
         }

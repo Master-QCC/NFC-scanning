@@ -190,8 +190,8 @@
 .container .content-section .send-section {
   position: relative;
   border-radius: 1.5rem;
-  width: 100%;
   min-height: 220px;
+  width: 100%;
   overflow: hidden;
   box-sizing: border-box;
   background-color: rgba(255, 255, 255, 0.9);
@@ -234,12 +234,6 @@
   height: 24rpx;
 }
 
-.container .content-section .send-section .title .total-box .count-item .icon.loading {
-  width: 28rpx;
-  height: 28rpx;
-  margin-right: 8rpx;
-}
-
 .container .content-section .send-section .title .total-box .count-item .icon.fail {
   width: 20rpx;
   height: 20rpx;
@@ -249,14 +243,27 @@
   margin-left: 12rpx;
 }
 
-.container .content-section .send-section .number-box {
+.container .content-section .send-section .number-wrapper {
+  width: 200%;
+  height: 100%;
+  transition: all .5s;
+}
+
+.container .content-section .send-section .number-wrapper.scroll {
+  transform: translateX(-50%);
+}
+
+.container .content-section .send-section .number-wrapper .number-box {
   padding: 0 1rem;
+  width: 50%;
+  display: inline-block;
   height: calc(100% - 50px);
+  overflow-y: scroll;
   box-sizing: border-box;
   transition: all .3s;
 }
 
-.container .content-section .send-section .number-box .number-list {
+.container .content-section .send-section .number-wrapper .number-box .number-list {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -267,25 +274,25 @@
   animation: showItem .5s ease forwards;
 }
 
-.container .content-section .send-section .number-box .number-list:first-child {
+.container .content-section .send-section .number-wrapper .number-box .number-list:first-child {
   border-top: none;
 }
 
-.container .content-section .send-section .number-box .number-list:last-child {
+.container .content-section .send-section .number-wrapper .number-box .number-list:last-child {
   padding-bottom: 1.5rem;
 }
 
-.container .content-section .send-section .number-box .number-list .icon {
+.container .content-section .send-section .number-wrapper .number-box .number-list .icon {
   width: 34rpx;
   height: 34rpx;
 }
 
-.container .content-section .send-section .number-box .number-list .icon.fail {
+.container .content-section .send-section .number-wrapper .number-box .number-list .icon.fail {
   width: 28rpx;
   height: 28rpx;
 }
 
-.container .content-section .send-section .number-box .number-list .icon.loading {
+.container .content-section .send-section .number-wrapper .number-box .number-list .icon.loading {
   width: 36rpx;
   height: 36rpx;
   animation: rotate 1.5s linear infinite;
