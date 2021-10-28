@@ -240,7 +240,23 @@ Page({
       path: '/pages/index/index'
     }
   },
+  onLoad() {
+    let storageModeIndex = wx.getStorageSync('modeIndex') ? wx.getStorageSync('modeIndex') : '0';
+    this.setData({
+      modeIndex: storageModeIndex
+    })
+    if (storageModeIndex === '1') {
+      this.setData({
+        scroll: true
+      })
+    }
+  },
   onHide() {
+    let modeIndex = this.data.modeIndex;
+    wx.setStorage({
+      key: "modeIndex",
+      data: modeIndex
+    })
     //退出时关闭NFC模块
     this.stopScan();
   }

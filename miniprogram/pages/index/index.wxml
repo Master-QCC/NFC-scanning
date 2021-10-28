@@ -52,14 +52,14 @@
         </view>
       </view>
       <view class="number-wrapper {{scroll ? 'scroll' : ''}}">
-        <view class="number-box">
+        <view class="number-box in">
           <view class="number-list" wx:for="{{nfcInList}}" wx:key="number">
             <view>{{item.number}}</view>
             <image class="icon fail" src="../../images/fail.svg" mode="aspectFill" wx:if="{{item.submitted === 'fail'}}"></image>
             <image class="icon" src="../../images/success.svg" mode="aspectFill" wx:else></image>
           </view>
         </view>
-        <view class="number-box">
+        <view class="number-box out">
           <view class="number-list" wx:for="{{nfcOutList}}" wx:key="number">
             <view>{{item.number}}</view>
             <image class="icon fail" src="../../images/fail.svg" mode="aspectFill" wx:if="{{item.submitted === 'fail'}}"></image>
