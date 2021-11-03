@@ -14,7 +14,12 @@ Page({
     //下拉菜单
     modeIndex: '0',
     modelList: ['入库', '出库'],
-    scroll: false
+    scroll: false,
+    checkCode: false,
+    showCode: false,
+    isIOS: false,
+    codeError: '',
+    codeRight: ''
   },
   ab2hex(buffer) {
     var hexArr = Array.prototype.map.call(
@@ -67,18 +72,7 @@ Page({
       }
     }
   },
-  startScan() {
-    let isIOS = wx.getSystemInfoSync().system.toLowerCase().indexOf('ios') !== -1
-
-    if (isIOS) {
-      wx.showModal({
-        title: '提示',
-        content: '苹果设备️暂不支持NFC功能',
-        showCancel: false,
-        confirmColor: '#ffa400'
-      })
-      return;
-    }
+  readingNFC() {
     this.nfc = wx.getNFCAdapter();
     const that = this;
 
@@ -108,6 +102,15 @@ Page({
     that.nfc.onDiscovered(function (res) {
       that.getMessage(res);
     });
+  },
+  startScan() {
+    if (!this.data.checkCode) {
+      this.setData({
+        showCode: true,
+      })
+    } else {
+      this.readingNFC();
+    }
   },
   bindPickerChange(e) {
     this.setData({
@@ -234,6 +237,37 @@ Page({
       })
     }
   },
+  //code校验
+  codeInput(event) {
+    let value = event.detail.value;
+    if (value === '') {
+      this.setData({
+        codeRight: '',
+        codeError: ''
+      });
+    } else if (value !== 'Conti') {
+      this.setData({
+        codeRight: '',
+        codeError: 'error'
+      });
+    } else {
+      wx.setStorage({
+        key: "checkCode",
+        data: true
+      })
+      this.setData({
+        codeRight: 'right',
+        codeError: ''
+      });
+      setTimeout(() => {
+        this.setData({
+          checkCode: true,
+          showCode: false
+        });
+      }, 1000);
+    }
+  },
+  //分享/转发
   onShareAppMessage() {
     return {
       title: '扫描小工具',
@@ -241,9 +275,13 @@ Page({
     }
   },
   onLoad() {
+    let isIOS = wx.getSystemInfoSync().system.toLowerCase().indexOf('ios') !== -1
     let storageModeIndex = wx.getStorageSync('modeIndex') ? wx.getStorageSync('modeIndex') : '0';
+    let storagecheckCode = wx.getStorageSync('checkCode') ? wx.getStorageSync('checkCode') : false;
     this.setData({
-      modeIndex: storageModeIndex
+      modeIndex: storageModeIndex,
+      checkCode: storagecheckCode,
+      isIOS: isIOS
     })
     if (storageModeIndex === '1') {
       this.setData({
@@ -252,6 +290,7 @@ Page({
     }
   },
   onHide() {
+    //记录当前下拉的选择
     let modeIndex = this.data.modeIndex;
     wx.setStorage({
       key: "modeIndex",

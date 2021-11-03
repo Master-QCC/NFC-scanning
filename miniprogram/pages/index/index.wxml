@@ -68,5 +68,15 @@
         </view>
       </view>
     </view>
+
+    <view class="code-wrapper" wx:if="{{showCode}}">
+      <view class="code-section {{codeError}} {{codeRight}}">
+        <view class="title">请输入身份校验码：</view>
+        <input class="input" type="text" bindinput="codeInput"/>
+        <view class="message" wx:if="{{codeRight}}">身份验证成功</view>
+      </view>
+    </view>
+
+    <view class="tips" wx:if="{{isIOS}}">暂不支持苹果设备</view>
   </view> 
 </view>
