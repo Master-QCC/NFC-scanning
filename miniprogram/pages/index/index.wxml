@@ -7,6 +7,7 @@
   </view>
 
   <view class="content-section">
+    <image class="logo" mode="aspectFill" src="../../images/conti-logo.png" alt="logo icon"></image>
     <view class="scan-section">
       <view class="nfc-title">NFC扫描</view>
 

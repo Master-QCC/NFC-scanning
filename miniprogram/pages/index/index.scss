@@ -57,6 +57,14 @@
     backdrop-filter: saturate(180%) blur(1rem);
     background-color: rgba(255, 255, 255, .3);
 
+    .logo {
+      position: fixed;
+      top: .5rem;
+      right: .5rem;
+      width: 238rpx;
+      height: 44rpx;
+    }
+
     .scan-section {
       display: flex;
       align-items: center;
@@ -68,7 +76,7 @@
       .nfc-title {
         font-size: 2rem;
         line-height: 1;
-        margin-bottom: 3rem;
+        margin-bottom: 2.5rem;
         font-weight: bold;
         background: linear-gradient(140deg, #000 0%, #804400 100%);
         background-position: 50% 75%;
